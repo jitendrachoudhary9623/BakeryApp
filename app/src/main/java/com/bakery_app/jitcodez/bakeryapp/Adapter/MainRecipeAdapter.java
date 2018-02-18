@@ -1,14 +1,19 @@
 package com.bakery_app.jitcodez.bakeryapp.Adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bakery_app.jitcodez.bakeryapp.MainActivity;
 import com.bakery_app.jitcodez.bakeryapp.R;
 import com.bakery_app.jitcodez.bakeryapp.model.Recipe;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -52,14 +57,29 @@ public class MainRecipeAdapter extends RecyclerView.Adapter<MainRecipeAdapter.Ma
     public class MainReciepeViewHolder extends RecyclerView.ViewHolder {
 
         TextView recipeTitle;
+        ImageView recipeImg;
         public MainReciepeViewHolder(View itemView) {
             super(itemView);
             recipeTitle=(TextView)itemView.findViewById(R.id.recipe_title);
+            recipeImg=(ImageView)itemView.findViewById(R.id.recipe_img);
         }
 
         public void bindData(int position)
         {
             recipeTitle.setText(mRecipes.get(position).getName());
+            String imageUrl=mRecipes.get(position).getImage();
+            if(imageUrl.equals(""))
+            {
+recipeImg.setVisibility(View.GONE);
+            }
+            else
+            {
+                Uri builtUri = Uri.parse(imageUrl).buildUpon().build();
+                Picasso.with(mContext).load(builtUri)
+                        .placeholder(R.mipmap.ic_launcher)
+                        .error(R.mipmap.ic_launcher_round)
+                        .into(recipeImg);
+            }
         }
     }
 }
