@@ -15,12 +15,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.bakery_app.jitcodez.bakeryapp.Adapter.MainRecipeAdapter;
+import com.bakery_app.jitcodez.bakeryapp.Networking.RecipeRequest;
+import com.bakery_app.jitcodez.bakeryapp.Networking.ServiceBuilder;
 import com.bakery_app.jitcodez.bakeryapp.model.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -55,15 +62,31 @@ public class MainActivity extends AppCompatActivity
         rv=(RecyclerView)findViewById(R.id.main_recipe_lookout);
         rv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         rv.setItemAnimator(new DefaultItemAnimator());
-        Recipe r=new Recipe();
-        r.setName("Hello");
-        List<Recipe> rp=new ArrayList<>();
-        rp.add(r);
-        rv.setAdapter(new MainRecipeAdapter(rp,this));
 
+
+getRecipes();
 
     }
 
+    public void getRecipes()
+    {
+        RecipeRequest recipeRequest = ServiceBuilder.buildService(RecipeRequest.class);
+        Call<List<Recipe>> caller=recipeRequest.getRecipeList();
+
+        caller.enqueue(new Callback<List<Recipe>>() {
+            @Override
+            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+                List<Recipe> rp=response.body();
+                rv.setAdapter(new MainRecipeAdapter(rp,MainActivity.this));
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Recipe>> call, Throwable t) {
+                Toast.makeText(MainActivity.this,"Error Occured",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
