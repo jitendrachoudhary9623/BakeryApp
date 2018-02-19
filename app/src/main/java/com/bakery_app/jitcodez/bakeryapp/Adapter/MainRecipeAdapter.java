@@ -68,18 +68,39 @@ public class MainRecipeAdapter extends RecyclerView.Adapter<MainRecipeAdapter.Ma
         {
             recipeTitle.setText(mRecipes.get(position).getName());
             String imageUrl=mRecipes.get(position).getImage();
-            if(imageUrl.equals(""))
-            {
-recipeImg.setVisibility(View.GONE);
-            }
-            else
-            {
-                Uri builtUri = Uri.parse(imageUrl).buildUpon().build();
-                Picasso.with(mContext).load(builtUri)
-                        .placeholder(R.mipmap.ic_launcher)
-                        .error(R.mipmap.ic_launcher_round)
-                        .into(recipeImg);
-            }
+           if(imageUrl.equals(""))
+           {
+               switch (position)
+               {
+                   case 0:
+                       setImage(R.drawable.nutella);
+                       break;
+                   case 1:
+                       setImage(R.drawable.brownies);
+                       break;
+                   case 2:
+                       setImage(R.drawable.yellow);
+                       break;
+                   case 3:
+                       setImage(R.drawable.cheese);
+                       break;
+               }
+           }
+           else {
+               Uri builtUri = Uri.parse(imageUrl).buildUpon().build();
+               Picasso.with(mContext).load(builtUri)
+                       .placeholder(R.mipmap.ic_launcher)
+                       .error(R.mipmap.ic_launcher_round)
+                       .into(recipeImg);
+           }
+
+        }
+
+        public void setImage(int id){
+            Picasso.with(mContext).load(id)
+                    .placeholder(R.mipmap.ic_launcher)
+                    .error(R.mipmap.ic_launcher_round)
+                    .into(recipeImg);
         }
     }
 }

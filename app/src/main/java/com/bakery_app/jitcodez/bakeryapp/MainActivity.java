@@ -3,6 +3,7 @@ package com.bakery_app.jitcodez.bakeryapp;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.bakery_app.jitcodez.bakeryapp.Adapter.MainRecipeAdapter;
 import com.bakery_app.jitcodez.bakeryapp.Networking.RecipeRequest;
 import com.bakery_app.jitcodez.bakeryapp.Networking.ServiceBuilder;
+import com.bakery_app.jitcodez.bakeryapp.fragments.RecipeListFragment;
 import com.bakery_app.jitcodez.bakeryapp.model.Recipe;
 
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    RecyclerView rv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,34 +61,16 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        rv=(RecyclerView)findViewById(R.id.main_recipe_lookout);
-        rv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-        rv.setItemAnimator(new DefaultItemAnimator());
+        //Recipe Fragment
+        RecipeListFragment recipeListFragment = new RecipeListFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
-
-getRecipes();
+        fragmentManager.beginTransaction()
+                .add(R.id.list_container,recipeListFragment)
+                .commit();
 
     }
 
-    public void getRecipes()
-    {
-        RecipeRequest recipeRequest = ServiceBuilder.buildService(RecipeRequest.class);
-        Call<List<Recipe>> caller=recipeRequest.getRecipeList();
-
-        caller.enqueue(new Callback<List<Recipe>>() {
-            @Override
-            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-                List<Recipe> rp=response.body();
-                rv.setAdapter(new MainRecipeAdapter(rp,MainActivity.this));
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                Toast.makeText(MainActivity.this,"Error Occured",Toast.LENGTH_LONG).show();
-            }
-        });
-    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
