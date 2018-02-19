@@ -1,4 +1,4 @@
-package com.bakery_app.jitcodez.bakeryapp;
+package com.bakery_app.jitcodez.bakeryapp.Activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.bakery_app.jitcodez.bakeryapp.Adapter.MainRecipeAdapter;
 import com.bakery_app.jitcodez.bakeryapp.Networking.RecipeRequest;
 import com.bakery_app.jitcodez.bakeryapp.Networking.ServiceBuilder;
+import com.bakery_app.jitcodez.bakeryapp.R;
 import com.bakery_app.jitcodez.bakeryapp.fragments.RecipeListFragment;
 import com.bakery_app.jitcodez.bakeryapp.model.Recipe;
 
