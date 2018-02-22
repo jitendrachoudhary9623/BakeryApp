@@ -26,6 +26,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
         Bundle b=new Bundle();
         b.putParcelableArrayList("ingredients", (ArrayList<? extends Parcelable>) recipe.getIngredients());
+        b.putParcelableArrayList("steps", (ArrayList<? extends Parcelable>) recipe.getSteps());
+
         Master_List master_list = new Master_List();
         master_list.setArguments(b);
         FragmentManager fragmentManager = getSupportFragmentManager();

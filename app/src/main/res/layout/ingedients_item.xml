@@ -4,13 +4,17 @@
 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    card_view:cardCornerRadius="12dp"
-    card_view:cardElevation="10dp">
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="25dp"
+    android:layout_marginRight="25dp"
+    card_view:cardCornerRadius="5dp"
+    card_view:cardElevation="2dp">
 
     <RelativeLayout
         android:id="@+id/relative_layout"
         android:layout_width="match_parent"
+        android:padding="5dp"
+        android:background="@color/colorPrimary"
         android:layout_height="match_parent">
 
 
@@ -19,21 +23,23 @@
             android:id="@+id/Ingredient_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
 
 
             android:gravity="center"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/Ingredient_Quantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
 
 
             android:gravity="center"
             android:layout_below="@id/Ingredient_title"
-            android:textSize="18sp"
+            android:textSize="11sp"
             android:textStyle="bold" />
 
 
