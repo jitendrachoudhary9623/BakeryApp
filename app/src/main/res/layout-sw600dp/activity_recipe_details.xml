@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="com.bakery_app.jitcodez.bakeryapp.Activity.RecipeDetailsActivity">
+
+    <FrameLayout android:id="@+id/master_list_container"
+        android:layout_width="400dp"
+        android:layout_height="match_parent"
+        android:scaleType="centerInside"/>
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/background_dark"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/tablet_mode">
+        <FrameLayout android:id="@+id/detail_list_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"/>
+    </LinearLayout>
+
+</LinearLayout>

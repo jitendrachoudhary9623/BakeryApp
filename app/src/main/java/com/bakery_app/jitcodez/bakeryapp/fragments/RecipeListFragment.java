@@ -4,6 +4,7 @@ package com.bakery_app.jitcodez.bakeryapp.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ import retrofit2.Response;
 public class RecipeListFragment extends Fragment {
 
     RecyclerView rv;
+    boolean mTwoPane;
     public RecipeListFragment() {
         // Required empty public constructor
     }
@@ -38,11 +40,20 @@ public class RecipeListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-    View rootView=inflater.inflate(R.layout.fragment_recipe_list, container, false);
+        View rootView=inflater.inflate(R.layout.fragment_recipe_list, container, false);
+
+        mTwoPane=getArguments().getBoolean("mTwoPane");
         rv=(RecyclerView)rootView.findViewById(R.id.main_recipe_lookout);
+if(mTwoPane) {
+    rv.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
-            rv.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
 
+}
+else
+{
+    rv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
+}
 
         rv.setItemAnimator(new DefaultItemAnimator());
 

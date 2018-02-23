@@ -26,13 +26,15 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
 
     List<Step> mStep;
     Context mContext;
+    boolean mTwoPane;
     public StepAdapter() {
 
     }
 
-    public StepAdapter(List<Step> step, Context context) {
+    public StepAdapter(List<Step> step, Context context,boolean mTwoPane) {
         mStep = step;
         mContext = context;
+        this.mTwoPane=mTwoPane;
     }
 
 
@@ -55,10 +57,19 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
                 arguments.putInt("Position",position);
                 Details_list fragment = new Details_list();
                 fragment.setArguments(arguments);
-                FragmentManager fm = ((RecipeDetailsActivity)mContext).getSupportFragmentManager();
-               fm.beginTransaction()
-                        .replace(R.id.master_list_container, fragment)
-                        .commit();
+                if(mTwoPane) {
+                    FragmentManager fm = ((RecipeDetailsActivity) mContext).getSupportFragmentManager();
+                    fm.beginTransaction()
+                            .replace(R.id.detail_list_container, fragment)
+                            .commit();
+                }
+                else
+                {
+                    FragmentManager fm = ((RecipeDetailsActivity) mContext).getSupportFragmentManager();
+                    fm.beginTransaction()
+                            .replace(R.id.master_list_container, fragment)
+                            .commit();
+                }
             }
         });
     }

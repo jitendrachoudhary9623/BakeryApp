@@ -36,8 +36,9 @@ public class Details_list extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootItem=inflater.inflate(R.layout.fragment_detail_list, container, false);
-         mSteps=getArguments().getParcelableArrayList("StepList");
          try{
+             mSteps=getArguments().getParcelableArrayList("StepList");
+
              position=getArguments().getInt("Position");
          }catch(Exception e)
          {
@@ -55,7 +56,9 @@ public class Details_list extends Fragment {
 
     public void updateUI()
     {
-        tv.setText(mSteps.get(position).getShortDescription());
+        if(mSteps!=null) {
+            tv.setText(mSteps.get(position).getShortDescription());
+        }
     }
 
     @Override
@@ -65,10 +68,12 @@ public class Details_list extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                position++;
-                if(position==mSteps.size())
-                    position=0;
-                updateUI();
+                if(mSteps!=null) {
+                    position++;
+                    if (position == mSteps.size())
+                        position = 0;
+                    updateUI();
+                }
             }
         });
     }

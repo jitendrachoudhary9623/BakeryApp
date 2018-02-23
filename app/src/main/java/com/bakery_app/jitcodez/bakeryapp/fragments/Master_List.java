@@ -47,6 +47,9 @@ public class Master_List extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootItem=inflater.inflate(R.layout.fragment_master_list, container, false);
+
+        boolean mTwoPane=getArguments().getBoolean("mTwoPane");
+
         rv_ingredients=(RecyclerView)rootItem.findViewById(R.id.rv_ingridents);
         rv_ingredients.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         rv_ingredients.setItemAnimator(new DefaultItemAnimator());
@@ -78,7 +81,7 @@ public class Master_List extends Fragment {
         rv_steps.setItemAnimator(new DefaultItemAnimator());
 
         List<Step> step=getArguments().getParcelableArrayList("steps");
-        rv_steps.setAdapter(new StepAdapter(step,getContext()));
+        rv_steps.setAdapter(new StepAdapter(step,getContext(),mTwoPane));
         return rootItem;
     }
 

@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -35,6 +36,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private  boolean mTwoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +66,22 @@ public class MainActivity extends AppCompatActivity
 
         //Recipe Fragment
         RecipeListFragment recipeListFragment = new RecipeListFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        Bundle b=new Bundle();
 
-        fragmentManager.beginTransaction()
-                .add(R.id.list_container,recipeListFragment)
-                .commit();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if(checkIfTablet()) {
+            b.putBoolean("mTwoPane",true);
+            recipeListFragment.setArguments(b);
+            fragmentManager.beginTransaction()
+                    .add(R.id.list_container, recipeListFragment)
+                    .commit();
+        }else{
+            b.putBoolean("mTwoPane",false);
+            recipeListFragment.setArguments(b);
+            fragmentManager.beginTransaction()
+                    .add(R.id.list_container, recipeListFragment)
+                    .commit();
+        }
 
     }
 
@@ -128,4 +141,21 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public boolean checkIfTablet(){
+        DisplayMetrics metrics = new DisplayMetrics();
+
+       getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        float yInches= metrics.heightPixels/metrics.ydpi;
+        float xInches= metrics.widthPixels/metrics.xdpi;
+        double diagonalInches = Math.sqrt(xInches*xInches + yInches*yInches);
+        if (diagonalInches>=6.5){
+            return true;
+        }else{
+            // smaller device
+            return false;
+        }
+    }
+
 }
