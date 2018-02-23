@@ -6,15 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.bakery_app.jitcodez.bakeryapp.Adapter.StepAdapter;
 import com.bakery_app.jitcodez.bakeryapp.R;
 import com.bakery_app.jitcodez.bakeryapp.fragments.Master_List;
-import com.bakery_app.jitcodez.bakeryapp.fragments.RecipeListFragment;
 import com.bakery_app.jitcodez.bakeryapp.model.Recipe;
 
 import java.util.ArrayList;
 
 
-public class RecipeDetailsActivity extends AppCompatActivity {
+public class RecipeDetailsActivity extends AppCompatActivity  {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,4 +38,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                 .commit();
 
     }
+
+
 }

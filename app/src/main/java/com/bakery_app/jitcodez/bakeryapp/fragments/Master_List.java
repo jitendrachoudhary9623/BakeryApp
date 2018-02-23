@@ -1,6 +1,7 @@
 package com.bakery_app.jitcodez.bakeryapp.fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -12,11 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bakery_app.jitcodez.bakeryapp.Adapter.IngridentAdapter;
-import com.bakery_app.jitcodez.bakeryapp.Adapter.MainRecipeAdapter;
 import com.bakery_app.jitcodez.bakeryapp.Adapter.StepAdapter;
 import com.bakery_app.jitcodez.bakeryapp.R;
 import com.bakery_app.jitcodez.bakeryapp.model.Ingredient;
-import com.bakery_app.jitcodez.bakeryapp.model.Recipe;
 import com.bakery_app.jitcodez.bakeryapp.model.Step;
 
 import java.util.List;
@@ -33,7 +32,15 @@ public class Master_List extends Fragment {
     public Master_List() {
         // Required empty public constructor
     }
+    //interface to communicate between fragments
+    public interface OnStepClickListener{
+        void onStepSelected(int position);
+    }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,6 +53,8 @@ public class Master_List extends Fragment {
 
         List<Ingredient> ingredients=getArguments().getParcelableArrayList("ingredients");
         rv_ingredients.setAdapter(new IngridentAdapter(ingredients,getContext()));
+
+
 
         ingredient_cv=(CardView)rootItem.findViewById(R.id.ingedient_title);
         ingredient_cv.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +79,6 @@ public class Master_List extends Fragment {
 
         List<Step> step=getArguments().getParcelableArrayList("steps");
         rv_steps.setAdapter(new StepAdapter(step,getContext()));
-
         return rootItem;
     }
 

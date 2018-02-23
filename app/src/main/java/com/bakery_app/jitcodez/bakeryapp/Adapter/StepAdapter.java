@@ -2,16 +2,20 @@ package com.bakery_app.jitcodez.bakeryapp.Adapter;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bakery_app.jitcodez.bakeryapp.Activity.RecipeDetailsActivity;
 import com.bakery_app.jitcodez.bakeryapp.R;
-import com.bakery_app.jitcodez.bakeryapp.model.Ingredient;
+import com.bakery_app.jitcodez.bakeryapp.fragments.Details_list;
 import com.bakery_app.jitcodez.bakeryapp.model.Step;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +26,6 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
 
     List<Step> mStep;
     Context mContext;
-
     public StepAdapter() {
 
     }
@@ -42,8 +45,22 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
     }
 
     @Override
-    public void onBindViewHolder(StepViewHolder holder, int position) {
+    public void onBindViewHolder(StepViewHolder holder, final int position) {
         holder.bindData(position);
+        holder.Steps_title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle arguments = new Bundle();
+                arguments.putParcelableArrayList("StepList", (ArrayList<? extends Parcelable>) mStep);
+                arguments.putInt("Position",position);
+                Details_list fragment = new Details_list();
+                fragment.setArguments(arguments);
+                FragmentManager fm = ((RecipeDetailsActivity)mContext).getSupportFragmentManager();
+               fm.beginTransaction()
+                        .replace(R.id.master_list_container, fragment)
+                        .commit();
+            }
+        });
     }
 
     @Override
@@ -51,7 +68,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
         return mStep.size();
     }
 
-    public class StepViewHolder extends RecyclerView.ViewHolder {
+    public class StepViewHolder extends RecyclerView.ViewHolder  {
 
         TextView Steps_title;
         Bundle bundle = new Bundle();
@@ -64,6 +81,10 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
         public void bindData(final int position) {
             Step i=mStep.get(position);
             Steps_title.setText(i.getShortDescription());
+
         }
+
+
+
     }
 }
