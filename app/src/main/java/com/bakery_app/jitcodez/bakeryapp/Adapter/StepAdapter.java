@@ -47,11 +47,13 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
     }
 
     @Override
-    public void onBindViewHolder(StepViewHolder holder, final int position) {
+    public void onBindViewHolder(final StepViewHolder holder, final int position) {
         holder.bindData(position);
         holder.Steps_title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 Bundle arguments = new Bundle();
                 arguments.putParcelableArrayList("StepList", (ArrayList<? extends Parcelable>) mStep);
                 arguments.putInt("Position",position);

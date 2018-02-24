@@ -23,7 +23,7 @@ public class RecipeDetailsActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_details);
        Recipe recipe = (Recipe) getIntent().getParcelableExtra("Object");
-
+getSupportActionBar().setTitle(""+recipe.getName());
         Toast.makeText(this,""+recipe.getName(),Toast.LENGTH_LONG).show();
 
         Bundle b=new Bundle();
