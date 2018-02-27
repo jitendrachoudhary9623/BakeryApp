@@ -15,55 +15,56 @@ import com.bakery_app.jitcodez.bakeryapp.model.Recipe;
 import java.util.ArrayList;
 
 
-public class RecipeDetailsActivity extends AppCompatActivity  {
+public class RecipeDetailsActivity extends AppCompatActivity {
 
-    private  boolean mTwoPane;
+    private boolean mTwoPane;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_details);
-       Recipe recipe = (Recipe) getIntent().getParcelableExtra("Object");
-getSupportActionBar().setTitle(""+recipe.getName());
-        Toast.makeText(this,""+recipe.getName(),Toast.LENGTH_LONG).show();
+        Recipe recipe = (Recipe) getIntent().getParcelableExtra("Object");
+        getSupportActionBar().setTitle("" + recipe.getName());
+        Toast.makeText(this, "" + recipe.getName(), Toast.LENGTH_LONG).show();
 
-        Bundle b=new Bundle();
+        Bundle b = new Bundle();
         b.putParcelableArrayList("ingredients", (ArrayList<? extends Parcelable>) recipe.getIngredients());
         b.putParcelableArrayList("steps", (ArrayList<? extends Parcelable>) recipe.getSteps());
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-            if(findViewById(R.id.tablet_mode)!=null)
-            {
-                mTwoPane=true;
-                Master_List master_list = new Master_List();
-                b.putBoolean("mTwoPane",true);
-                master_list.setArguments(b);
+        if (findViewById(R.id.tablet_mode) != null) {
+            mTwoPane = true;
+            Master_List master_list = new Master_List();
+            b.putBoolean("mTwoPane", true);
+            master_list.setArguments(b);
 
 
-                fragmentManager.beginTransaction()
+            fragmentManager.beginTransaction()
 
-                        .add(R.id.master_list_container,master_list)
-                        .commit();
+                    .add(R.id.master_list_container, master_list)
 
-                Details_list detail_list = new Details_list();
+                    .commit();
 
-                fragmentManager.beginTransaction()
+            Details_list detail_list = new Details_list();
 
-                        .add(R.id.detail_list_container,detail_list)
-                        .commit();
-            }
-            else
-            {
-                mTwoPane=false;
-                Master_List master_list = new Master_List();
-                b.putBoolean("mTwoPane",false);
+            fragmentManager.beginTransaction()
 
-                master_list.setArguments(b);
+                    .add(R.id.detail_list_container, detail_list)
 
-                fragmentManager.beginTransaction()
+                    .commit();
+        } else {
+            mTwoPane = false;
+            Master_List master_list = new Master_List();
+            b.putBoolean("mTwoPane", false);
 
-                        .add(R.id.master_list_container,master_list)
-                        .commit();
-            }
+            master_list.setArguments(b);
+
+            fragmentManager.beginTransaction()
+
+                    .add(R.id.master_list_container, master_list)
+                    .addToBackStack(null)
+                    .commit();
+        }
 
 
     }

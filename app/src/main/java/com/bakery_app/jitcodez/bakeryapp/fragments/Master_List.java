@@ -32,10 +32,7 @@ public class Master_List extends Fragment {
     public Master_List() {
         // Required empty public constructor
     }
-    //interface to communicate between fragments
-    public interface OnStepClickListener{
-        void onStepSelected(int position);
-    }
+
 
     @Override
     public void onAttach(Context context) {
@@ -47,6 +44,7 @@ public class Master_List extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootItem=inflater.inflate(R.layout.fragment_master_list, container, false);
+        setRetainInstance(true);
 
         boolean mTwoPane=getArguments().getBoolean("mTwoPane");
 

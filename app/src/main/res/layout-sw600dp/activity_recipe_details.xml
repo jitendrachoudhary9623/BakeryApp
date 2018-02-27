@@ -7,8 +7,10 @@
     android:orientation="horizontal"
     tools:context="com.bakery_app.jitcodez.bakeryapp.Activity.RecipeDetailsActivity">
 
-    <FrameLayout android:id="@+id/master_list_container"
+    <LinearLayout android:id="@+id/master_list_container"
         android:layout_width="400dp"
+        android:orientation="vertical"
+
         android:layout_height="match_parent"
         android:scaleType="centerInside"/>
     <View
@@ -20,9 +22,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/tablet_mode">
-        <FrameLayout android:id="@+id/detail_list_container"
+        <LinearLayout android:id="@+id/detail_list_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
+
             android:scaleType="centerInside"/>
     </LinearLayout>
 

@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:context="com.bakery_app.jitcodez.bakeryapp.Activity.RecipeDetailsActivity">
 
-    <FrameLayout android:id="@+id/master_list_container"
+    <LinearLayout android:id="@+id/master_list_container"
+        android:orientation="vertical"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerInside"/>

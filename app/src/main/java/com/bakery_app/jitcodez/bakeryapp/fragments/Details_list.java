@@ -61,6 +61,8 @@ public class Details_list extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootItem = inflater.inflate(R.layout.fragment_detail_list, container, false);
+        setRetainInstance(true);
+
         try {
             mSteps = getArguments().getParcelableArrayList("StepList");
 
@@ -155,4 +157,6 @@ public class Details_list extends Fragment {
             }
         });
     }
+
+
 }
