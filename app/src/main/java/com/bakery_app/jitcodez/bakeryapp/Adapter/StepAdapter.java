@@ -57,10 +57,12 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
                 Bundle arguments = new Bundle();
                 arguments.putParcelableArrayList("StepList", (ArrayList<? extends Parcelable>) mStep);
                 arguments.putInt("Position",position);
+                arguments.putBoolean("mTwoPane",mTwoPane);
                 Details_list fragment = new Details_list();
                 fragment.setArguments(arguments);
                 if(mTwoPane) {
                     FragmentManager fm = ((RecipeDetailsActivity) mContext).getSupportFragmentManager();
+
                     fm.beginTransaction()
                             .replace(R.id.detail_list_container, fragment)
                             .commit();

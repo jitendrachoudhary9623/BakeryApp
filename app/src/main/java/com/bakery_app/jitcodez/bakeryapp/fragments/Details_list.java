@@ -50,7 +50,7 @@ public class Details_list extends Fragment {
     Button next;
     SimpleExoPlayer player;
     SimpleExoPlayerView simpleExoPlayerView;
-
+    boolean mTwoPane=false;
     public Details_list() {
         // Required empty public constructor
     }
@@ -65,6 +65,7 @@ public class Details_list extends Fragment {
 
         try {
             mSteps = getArguments().getParcelableArrayList("StepList");
+            mTwoPane=getArguments().getBoolean("mTwoPane");
 
             position = getArguments().getInt("Position");
         } catch (Exception e) {
@@ -140,23 +141,52 @@ public class Details_list extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+       if(savedInstanceState!=null)
+       {
+           position=savedInstanceState.getInt("Position1");
+            mTwoPane=savedInstanceState.getBoolean("sTwoPane");
+           updateUI();
+       }
+       else
+       {
+           updateUI();
+       }
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mSteps != null) {
                     position++;
+                    if(!mTwoPane) {
+                        next.setVisibility(View.VISIBLE);
+                    }else
+                    {
+                        next.setVisibility(View.INVISIBLE);
+
+                    }
                     if (player != null) {
                         player.release();
                         player = null;
                     }
-                    if (position == mSteps.size())
+                    if (position == mSteps.size()-1) {
+
+                        next.setVisibility(View.GONE);
+
+                    }
+                    if (position == mSteps.size()) {
                         position = 0;
+
+
+                    }
                     updateUI();
                 }
             }
         });
     }
 
-
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("Position1",position);
+        outState.putBoolean("sTwoPane",mTwoPane);
+    }
 }
