@@ -50,6 +50,7 @@ public class Details_list extends Fragment {
     Button next;
     SimpleExoPlayer player;
     SimpleExoPlayerView simpleExoPlayerView;
+    private long currentPosition = 0;
     boolean mTwoPane=false;
     public Details_list() {
         // Required empty public constructor
@@ -79,6 +80,10 @@ public class Details_list extends Fragment {
         simpleExoPlayerView = (SimpleExoPlayerView) rootItem.findViewById(R.id.video_view);
 
         updateUI();
+        if(currentPosition!=0)
+        {
+            player.seekTo(currentPosition);
+        }
         //Toast.makeText(getContext(),step.getShortDescription(),Toast.LENGTH_SHORT).show();
         return rootItem;
     }
@@ -120,9 +125,7 @@ public class Details_list extends Fragment {
         TrackSelector trackSelector =
                 new DefaultTrackSelector(videoTrackSelectionFactory);
 
-        player = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector);
 
-        simpleExoPlayerView.setPlayer(player);
 
         DataSource.Factory dataSourceFactory =
                 new DefaultDataSourceFactory(getContext(), Util.getUserAgent(getContext(), "BakeryApp"));
@@ -133,24 +136,31 @@ public class Details_list extends Fragment {
         Uri videoUri = Uri.parse(url);
         MediaSource videoSource = new ExtractorMediaSource(videoUri,
                 dataSourceFactory, extractorsFactory, null, null);
-        player.prepare(videoSource);
+        if(player==null) {
+            player = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector);
 
-
+            simpleExoPlayerView.setPlayer(player);
+            player.prepare(videoSource);
+            player.setPlayWhenReady(true);
+        }
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-       if(savedInstanceState!=null)
-       {
-           position=savedInstanceState.getInt("Position1");
+        if(savedInstanceState!=null)
+        {
+            position=savedInstanceState.getInt("Position1");
             mTwoPane=savedInstanceState.getBoolean("sTwoPane");
-           updateUI();
-       }
-       else
-       {
-           updateUI();
-       }
+            currentPosition = savedInstanceState.getLong("PlayerPosition");
+            updateUI();
+        }
+        else
+        {
+            updateUI();
+        }
+
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,5 +198,18 @@ public class Details_list extends Fragment {
         super.onSaveInstanceState(outState);
         outState.putInt("Position1",position);
         outState.putBoolean("sTwoPane",mTwoPane);
+
+        if (player != null) {
+            outState.putLong("PlayerPosition", player.getCurrentPosition());
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (player != null) {
+            player.stop();
+            player.release();
+        }
     }
 }

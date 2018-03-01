@@ -106,7 +106,7 @@ setRetainInstance(true);
 */
 
     class RecipeList extends AsyncTask<Void,Void,List<Recipe>>{
-List<Recipe> recipes;
+            List<Recipe> recipes;
         @Override
         protected List<Recipe> doInBackground(Void... voids) {
             RecipeRequest recipeRequest = ServiceBuilder.buildService(RecipeRequest.class);

@@ -30,6 +30,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         Bundle b = new Bundle();
         b.putParcelableArrayList("ingredients", (ArrayList<? extends Parcelable>) recipe.getIngredients());
         b.putParcelableArrayList("steps", (ArrayList<? extends Parcelable>) recipe.getSteps());
+        b.putString("RecipeName",recipe.getName());
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         if (findViewById(R.id.tablet_mode) != null) {
