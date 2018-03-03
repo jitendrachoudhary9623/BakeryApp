@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,8 +38,11 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import static android.view.View.GONE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,6 +55,7 @@ public class Details_list extends Fragment {
     Button next;
     SimpleExoPlayer player;
     SimpleExoPlayerView simpleExoPlayerView;
+    ImageView img;
     private long currentPosition = 0;
     boolean mTwoPane=false;
     public Details_list() {
@@ -79,7 +84,7 @@ public class Details_list extends Fragment {
 
         next = (Button) rootItem.findViewById(R.id.next_button);
         simpleExoPlayerView = (SimpleExoPlayerView) rootItem.findViewById(R.id.video_view);
-
+        img=(ImageView)rootItem.findViewById(R.id.thumbImage) ;
         updateUI();
         if(currentPosition!=0)
         {
@@ -111,9 +116,24 @@ public class Details_list extends Fragment {
 
                 initializePlayer(url);
             } else {
-                simpleExoPlayerView.setVisibility(View.GONE);
+                simpleExoPlayerView.setVisibility(GONE);
+            }
+            String thumbnail=mSteps.get(position).getThumbnailURL();
+            if(thumbnail.equals(""))
+            {
+                img.setVisibility(GONE);
+            }
+            else
+            {
+                img.setVisibility(View.VISIBLE);
+                Picasso.with(getContext()).load(Uri.parse(thumbnail))
+                        .placeholder(R.mipmap.ic_launcher)
+                        .error(R.mipmap.ic_launcher_round)
+                        .into(img);
             }
         }
+
+
     }
 
     private void initializePlayer(String url) {
@@ -163,7 +183,10 @@ public class Details_list extends Fragment {
         {
             updateUI();
         }
-
+if(mTwoPane)
+{
+    next.setVisibility(View.INVISIBLE);
+}
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,7 +206,8 @@ public class Details_list extends Fragment {
                     }
                     if (position == mSteps.size()-1) {
 
-                        next.setVisibility(View.GONE);
+                        next.setVisibility(GONE);
+
 
                     }
                     if (position == mSteps.size()) {
