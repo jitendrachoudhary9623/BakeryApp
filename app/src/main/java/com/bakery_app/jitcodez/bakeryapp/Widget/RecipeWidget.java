@@ -1,14 +1,13 @@
-package com.bakery_app.jitcodez.bakeryapp;
+package com.bakery_app.jitcodez.bakeryapp.Widget;
 
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.widget.RemoteViews;
 
+import com.bakery_app.jitcodez.bakeryapp.R;
 import com.bakery_app.jitcodez.bakeryapp.model.Ingredient;
 
 import java.util.List;

@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bakery_app.jitcodez.bakeryapp.Constants;
 import com.bakery_app.jitcodez.bakeryapp.R;
 import com.bakery_app.jitcodez.bakeryapp.model.Recipe;
 import com.bakery_app.jitcodez.bakeryapp.model.Step;
@@ -65,10 +66,10 @@ public class Details_list extends Fragment {
         setRetainInstance(true);
 
         try {
-            mSteps = getArguments().getParcelableArrayList("StepList");
-            mTwoPane=getArguments().getBoolean("mTwoPane");
+            mSteps = getArguments().getParcelableArrayList(Constants.StepList);
+            mTwoPane=getArguments().getBoolean(Constants.mTwoPane);
 
-            position = getArguments().getInt("Position");
+            position = getArguments().getInt(Constants.Position);
         } catch (Exception e) {
             position = 0;
         }
@@ -89,10 +90,7 @@ public class Details_list extends Fragment {
     }
 
 
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
+
 
     @Override
     public void onPause() {
@@ -141,7 +139,13 @@ public class Details_list extends Fragment {
 
             simpleExoPlayerView.setPlayer(player);
             player.prepare(videoSource);
-            player.setPlayWhenReady(true);
+            if(currentPosition!=0)
+            {
+                player.seekTo(currentPosition);
+            }
+            else {
+                player.setPlayWhenReady(true);
+            }
         }
     }
 
@@ -151,8 +155,8 @@ public class Details_list extends Fragment {
         if(savedInstanceState!=null)
         {
             position=savedInstanceState.getInt("Position1");
-            mTwoPane=savedInstanceState.getBoolean("sTwoPane");
-            currentPosition = savedInstanceState.getLong("PlayerPosition");
+            mTwoPane=savedInstanceState.getBoolean(Constants.sTwoPane);
+            currentPosition = savedInstanceState.getLong(Constants.ExoPlayerPosition);
             updateUI();
         }
         else
@@ -194,13 +198,18 @@ public class Details_list extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("Position1",position);
-        outState.putBoolean("sTwoPane",mTwoPane);
+        outState.putBoolean(Constants.sTwoPane,mTwoPane);
 
         if (player != null) {
-            outState.putLong("PlayerPosition", player.getCurrentPosition());
+            outState.putLong(Constants.ExoPlayerPosition, player.getCurrentPosition());
         }
     }
 

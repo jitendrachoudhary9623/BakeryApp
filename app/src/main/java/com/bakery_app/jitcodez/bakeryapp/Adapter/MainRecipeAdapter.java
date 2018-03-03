@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bakery_app.jitcodez.bakeryapp.Activity.RecipeDetailsActivity;
+import com.bakery_app.jitcodez.bakeryapp.Constants;
 import com.bakery_app.jitcodez.bakeryapp.R;
 import com.bakery_app.jitcodez.bakeryapp.model.Recipe;
 import com.squareup.picasso.Picasso;
@@ -101,8 +102,8 @@ public class MainRecipeAdapter extends RecyclerView.Adapter<MainRecipeAdapter.Ma
                 @Override
                 public void onClick(View v) {
                     Intent in=new Intent(mContext, RecipeDetailsActivity.class);
-        Recipe recipe=mRecipes.get(position);
-                  in.putExtra("Object",recipe);
+                    Recipe recipe=mRecipes.get(position);
+                    in.putExtra(Constants.OBJECT,recipe);
                     mContext.startActivity(in);
                 }
             });

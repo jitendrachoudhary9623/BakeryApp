@@ -1,4 +1,4 @@
-package com.bakery_app.jitcodez.bakeryapp;
+package com.bakery_app.jitcodez.bakeryapp.Widget;
 
 import android.app.IntentService;
 import android.appwidget.AppWidgetManager;

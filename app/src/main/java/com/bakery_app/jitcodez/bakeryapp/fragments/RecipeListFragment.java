@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.bakery_app.jitcodez.bakeryapp.Activity.MainActivity;
 import com.bakery_app.jitcodez.bakeryapp.Adapter.MainRecipeAdapter;
+import com.bakery_app.jitcodez.bakeryapp.Constants;
 import com.bakery_app.jitcodez.bakeryapp.Networking.RecipeRequest;
 import com.bakery_app.jitcodez.bakeryapp.Networking.ServiceBuilder;
 import com.bakery_app.jitcodez.bakeryapp.R;
@@ -51,7 +52,7 @@ public class RecipeListFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView=inflater.inflate(R.layout.fragment_recipe_list, container, false);
 setRetainInstance(true);
-        mTwoPane=getArguments().getBoolean("mTwoPane");
+        mTwoPane=getArguments().getBoolean(Constants.mTwoPane);
         rv=(RecyclerView)rootView.findViewById(R.id.main_recipe_lookout);
         if(mTwoPane) {
             rv.setLayoutManager(new GridLayoutManager(getContext(), 3));
@@ -79,7 +80,7 @@ setRetainInstance(true);
         {
             rp.clear();
             rp=null;
-            rp=savedInstanceState.getParcelableArrayList("RecipeList");
+            rp=savedInstanceState.getParcelableArrayList(Constants.RecipeList);
             setupRecyclerView(rp);
         }
     }
@@ -146,8 +147,10 @@ rp=rp1;
     public void onSaveInstanceState(Bundle outState) {
 
         super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList("RecipeList", (ArrayList<Recipe>) rp);
+        outState.putParcelableArrayList(Constants.RecipeList, (ArrayList<Recipe>) rp);
     }
+
+
 
 
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.bakery_app.jitcodez.bakeryapp.Adapter.StepAdapter;
+import com.bakery_app.jitcodez.bakeryapp.Constants;
 import com.bakery_app.jitcodez.bakeryapp.R;
 import com.bakery_app.jitcodez.bakeryapp.fragments.Details_list;
 import com.bakery_app.jitcodez.bakeryapp.fragments.Master_List;
@@ -23,20 +24,20 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_details);
-        Recipe recipe = (Recipe) getIntent().getParcelableExtra("Object");
+        Recipe recipe = (Recipe) getIntent().getParcelableExtra(Constants.OBJECT);
         getSupportActionBar().setTitle("" + recipe.getName());
         Toast.makeText(this, "" + recipe.getName(), Toast.LENGTH_LONG).show();
 
         Bundle b = new Bundle();
-        b.putParcelableArrayList("ingredients", (ArrayList<? extends Parcelable>) recipe.getIngredients());
-        b.putParcelableArrayList("steps", (ArrayList<? extends Parcelable>) recipe.getSteps());
-        b.putString("RecipeName",recipe.getName());
+        b.putParcelableArrayList(Constants.Ingredients, (ArrayList<? extends Parcelable>) recipe.getIngredients());
+        b.putParcelableArrayList(Constants.Steps, (ArrayList<? extends Parcelable>) recipe.getSteps());
+        b.putString(Constants.RecipeName,recipe.getName());
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         if (findViewById(R.id.tablet_mode) != null) {
             mTwoPane = true;
             Master_List master_list = new Master_List();
-            b.putBoolean("mTwoPane", true);
+            b.putBoolean(Constants.mTwoPane, true);
             master_list.setArguments(b);
 
 
@@ -56,7 +57,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         } else {
             mTwoPane = false;
             Master_List master_list = new Master_List();
-            b.putBoolean("mTwoPane", false);
+            b.putBoolean(Constants.mTwoPane, false);
 
             master_list.setArguments(b);
 
@@ -69,6 +70,5 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
 
     }
-
 
 }

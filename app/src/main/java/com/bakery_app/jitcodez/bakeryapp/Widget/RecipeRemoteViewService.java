@@ -1,10 +1,11 @@
-package com.bakery_app.jitcodez.bakeryapp;
+package com.bakery_app.jitcodez.bakeryapp.Widget;
 
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.bakery_app.jitcodez.bakeryapp.R;
 import com.bakery_app.jitcodez.bakeryapp.model.Ingredient;
 
 import java.util.List;

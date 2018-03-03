@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bakery_app.jitcodez.bakeryapp.Activity.RecipeDetailsActivity;
+import com.bakery_app.jitcodez.bakeryapp.Constants;
 import com.bakery_app.jitcodez.bakeryapp.R;
 import com.bakery_app.jitcodez.bakeryapp.fragments.Details_list;
 import com.bakery_app.jitcodez.bakeryapp.model.Step;
@@ -55,9 +56,9 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
 
 
                 Bundle arguments = new Bundle();
-                arguments.putParcelableArrayList("StepList", (ArrayList<? extends Parcelable>) mStep);
-                arguments.putInt("Position",position);
-                arguments.putBoolean("mTwoPane",mTwoPane);
+                arguments.putParcelableArrayList(Constants.StepList, (ArrayList<? extends Parcelable>) mStep);
+                arguments.putInt(Constants.Position,position);
+                arguments.putBoolean(Constants.mTwoPane,mTwoPane);
                 Details_list fragment = new Details_list();
                 fragment.setArguments(arguments);
                 if(mTwoPane) {
