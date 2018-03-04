@@ -80,6 +80,13 @@ boolean playerPlaying=true;
         } catch (Exception e) {
             position = 0;
         }
+        if(savedInstanceState!=null)
+        {
+            playerPlaying=savedInstanceState.getBoolean("PlayerPlaying");
+            mTwoPane = savedInstanceState.getBoolean(Constants.sTwoPane);
+            currentPosition = savedInstanceState.getLong(Constants.ExoPlayerPosition);
+            position = savedInstanceState.getInt("Position1");
+        }
         step_desc = (TextView) rootItem.findViewById(R.id.step_description);
 
         step_short_desc = (TextView) rootItem.findViewById(R.id.step_short_description);
@@ -101,7 +108,7 @@ boolean playerPlaying=true;
         super.onPause();
         if (player != null) {
             currentPosition=player.getCurrentPosition();
-
+            playerPlaying=player.getPlayWhenReady();
             player.release();
             player = null;
         }
@@ -159,7 +166,7 @@ boolean playerPlaying=true;
             player.seekTo(currentPosition);
             player.setPlayWhenReady(playerPlaying);
         }
-        player.addListener(new Player.DefaultEventListener() {
+     /*   player.addListener(new Player.DefaultEventListener() {
             @Override
             public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
                 if (playWhenReady && playbackState == Player.STATE_READY) {
@@ -171,7 +178,7 @@ boolean playerPlaying=true;
                 playerPlaying=false;
                 }
             }
-        });
+        });*/
 
 
     }
@@ -180,10 +187,10 @@ boolean playerPlaying=true;
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null) {
-            position = savedInstanceState.getInt("Position1");
+            /*position = savedInstanceState.getInt("Position1");
             mTwoPane = savedInstanceState.getBoolean(Constants.sTwoPane);
-           currentPosition = savedInstanceState.getLong(Constants.ExoPlayerPosition);
-           playerPlaying=savedInstanceState.getBoolean("PlayerPlaying");
+           currentPosition = savedInstanceState.getLong(Constants.ExoPlayerPosition);*/
+         //  playerPlaying=savedInstanceState.getBoolean("PlayerPlaying");
 
         }
         if (mTwoPane) {
