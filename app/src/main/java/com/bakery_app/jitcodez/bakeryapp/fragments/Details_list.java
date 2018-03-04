@@ -99,8 +99,9 @@ public class Details_list extends Fragment {
     public void onPause() {
         super.onPause();
         Toast.makeText(getContext(), "" + player.getCurrentPosition(), Toast.LENGTH_LONG).show();
-currentPosition=player.getCurrentPosition();
         if (player != null) {
+            currentPosition=player.getCurrentPosition();
+
             player.release();
             player = null;
         }

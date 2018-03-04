@@ -4,6 +4,7 @@ package com.bakery_app.jitcodez.bakeryapp.fragments;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -44,7 +45,7 @@ public class RecipeListFragment extends Fragment {
     public RecipeListFragment() {
         // Required empty public constructor
     }
-
+    private static Bundle mBundleRecyclerViewState;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -151,9 +152,31 @@ rp=rp1;
 
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(Constants.RecipeList, (ArrayList<Recipe>) rp);
+        outState.putParcelable("ListState", rv.getLayoutManager().onSaveInstanceState());
     }
 
+    @Override
+    public void onPause()
+    {
+        super.onPause();
 
+        // save RecyclerView state
+        mBundleRecyclerViewState = new Bundle();
+        Parcelable listState = rv.getLayoutManager().onSaveInstanceState();
+        mBundleRecyclerViewState.putParcelable("rv", listState);
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        // restore RecyclerView state
+        if (mBundleRecyclerViewState != null) {
+            Parcelable listState = mBundleRecyclerViewState.getParcelable("rv");
+            rv.getLayoutManager().onRestoreInstanceState(listState);
+        }
+    }
 
 
 

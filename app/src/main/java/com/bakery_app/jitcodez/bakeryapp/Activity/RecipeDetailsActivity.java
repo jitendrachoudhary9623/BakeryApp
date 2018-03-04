@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class RecipeDetailsActivity extends AppCompatActivity {
 
     private boolean mTwoPane;
+    boolean playerReady=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
