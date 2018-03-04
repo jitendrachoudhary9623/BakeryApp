@@ -99,7 +99,6 @@ boolean playerPlaying=true;
     @Override
     public void onPause() {
         super.onPause();
-        Toast.makeText(getContext(), "" + player.getCurrentPosition(), Toast.LENGTH_LONG).show();
         if (player != null) {
             currentPosition=player.getCurrentPosition();
 
