@@ -51,9 +51,13 @@ public class BakeryAppInstrumentationTest {
     public void CheckAppWorking() {
 
         onView(firstView(withId(R.id.main_recipe_lookout)))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(3, click()));
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
 
+
+        onView(firstView(withId(R.id.rv_steps)))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.step_short_description)).check(matches(withText("Recipe Introduction")));
     }
 
     private <T> Matcher<T> firstView(final Matcher<T> matcher) {
