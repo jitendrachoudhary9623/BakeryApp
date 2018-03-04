@@ -56,8 +56,9 @@ public class Details_list extends Fragment {
     SimpleExoPlayer player;
     SimpleExoPlayerView simpleExoPlayerView;
     ImageView img;
-    private long currentPosition = 0;
-    boolean mTwoPane=false;
+    private long currentPosition=0;
+    boolean mTwoPane = false;
+
     public Details_list() {
         // Required empty public constructor
     }
@@ -72,7 +73,7 @@ public class Details_list extends Fragment {
 
         try {
             mSteps = getArguments().getParcelableArrayList(Constants.StepList);
-            mTwoPane=getArguments().getBoolean(Constants.mTwoPane);
+            mTwoPane = getArguments().getBoolean(Constants.mTwoPane);
 
             position = getArguments().getInt(Constants.Position);
         } catch (Exception e) {
@@ -84,22 +85,21 @@ public class Details_list extends Fragment {
 
         next = (Button) rootItem.findViewById(R.id.next_button);
         simpleExoPlayerView = (SimpleExoPlayerView) rootItem.findViewById(R.id.video_view);
-        img=(ImageView)rootItem.findViewById(R.id.thumbImage) ;
+        img = (ImageView) rootItem.findViewById(R.id.thumbImage);
+        //Toast.makeText(getContext(), "" + currentPosition, Toast.LENGTH_LONG).show();
+
         updateUI();
-        if(currentPosition!=0)
-        {
-            player.seekTo(currentPosition);
-        }
+
         //Toast.makeText(getContext(),step.getShortDescription(),Toast.LENGTH_SHORT).show();
         return rootItem;
     }
 
 
-
-
     @Override
     public void onPause() {
         super.onPause();
+        Toast.makeText(getContext(), "" + player.getCurrentPosition(), Toast.LENGTH_LONG).show();
+currentPosition=player.getCurrentPosition();
         if (player != null) {
             player.release();
             player = null;
@@ -118,13 +118,10 @@ public class Details_list extends Fragment {
             } else {
                 simpleExoPlayerView.setVisibility(GONE);
             }
-            String thumbnail=mSteps.get(position).getThumbnailURL();
-            if(thumbnail.equals(""))
-            {
+            String thumbnail = mSteps.get(position).getThumbnailURL();
+            if (thumbnail.equals("")) {
                 img.setVisibility(GONE);
-            }
-            else
-            {
+            } else {
                 img.setVisibility(View.VISIBLE);
                 Picasso.with(getContext()).load(Uri.parse(thumbnail))
                         .placeholder(R.mipmap.ic_launcher)
@@ -144,7 +141,6 @@ public class Details_list extends Fragment {
                 new DefaultTrackSelector(videoTrackSelectionFactory);
 
 
-
         DataSource.Factory dataSourceFactory =
                 new DefaultDataSourceFactory(getContext(), Util.getUserAgent(getContext(), "BakeryApp"));
 
@@ -154,49 +150,39 @@ public class Details_list extends Fragment {
         Uri videoUri = Uri.parse(url);
         MediaSource videoSource = new ExtractorMediaSource(videoUri,
                 dataSourceFactory, extractorsFactory, null, null);
-        if(player==null) {
+        if (player == null) {
             player = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector);
 
             simpleExoPlayerView.setPlayer(player);
             player.prepare(videoSource);
-            if(currentPosition!=0)
-            {
-                player.seekTo(currentPosition);
-            }
-            else {
-                player.setPlayWhenReady(true);
-            }
+            player.seekTo(currentPosition);
+
         }
+
+        player.setPlayWhenReady(true);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if(savedInstanceState!=null)
-        {
-            position=savedInstanceState.getInt("Position1");
-            mTwoPane=savedInstanceState.getBoolean(Constants.sTwoPane);
-            currentPosition = savedInstanceState.getLong(Constants.ExoPlayerPosition);
-            updateUI();
+        if (savedInstanceState != null) {
+            position = savedInstanceState.getInt("Position1");
+            mTwoPane = savedInstanceState.getBoolean(Constants.sTwoPane);
+           currentPosition = savedInstanceState.getLong(Constants.ExoPlayerPosition);
+
         }
-        else
-        {
-            updateUI();
+        if (mTwoPane) {
+            next.setVisibility(View.INVISIBLE);
         }
-if(mTwoPane)
-{
-    next.setVisibility(View.INVISIBLE);
-}
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mSteps != null) {
                     position++;
-                    if(!mTwoPane) {
+                    if (!mTwoPane) {
                         next.setVisibility(View.VISIBLE);
-                    }else
-                    {
+                    } else {
                         next.setVisibility(View.INVISIBLE);
 
                     }
@@ -204,7 +190,7 @@ if(mTwoPane)
                         player.release();
                         player = null;
                     }
-                    if (position == mSteps.size()-1) {
+                    if (position == mSteps.size() - 1) {
 
                         next.setVisibility(GONE);
 
@@ -224,17 +210,19 @@ if(mTwoPane)
     @Override
     public void onResume() {
         super.onResume();
+        updateUI();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("Position1",position);
-        outState.putBoolean(Constants.sTwoPane,mTwoPane);
+        outState.putInt("Position1", position);
+        outState.putBoolean(Constants.sTwoPane, mTwoPane);
 
-        if (player != null) {
-            outState.putLong(Constants.ExoPlayerPosition, player.getCurrentPosition());
-        }
+
+        outState.putLong(Constants.ExoPlayerPosition, currentPosition);
+
+
     }
 
     @Override

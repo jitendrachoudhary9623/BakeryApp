@@ -26,7 +26,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_details);
         Recipe recipe = (Recipe) getIntent().getParcelableExtra(Constants.OBJECT);
         getSupportActionBar().setTitle("" + recipe.getName());
-        Toast.makeText(this, "" + recipe.getName(), Toast.LENGTH_LONG).show();
+      //  Toast.makeText(this, "" + recipe.getName(), Toast.LENGTH_LONG).show();
 
         Bundle b = new Bundle();
         b.putParcelableArrayList(Constants.Ingredients, (ArrayList<? extends Parcelable>) recipe.getIngredients());
