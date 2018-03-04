@@ -22,6 +22,7 @@ import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.extractor.ExtractorsFactory;
@@ -58,7 +59,7 @@ public class Details_list extends Fragment {
     ImageView img;
     private long currentPosition=0;
     boolean mTwoPane = false;
-
+boolean playerPlaying=true;
     public Details_list() {
         // Required empty public constructor
     }
@@ -157,10 +158,23 @@ public class Details_list extends Fragment {
             simpleExoPlayerView.setPlayer(player);
             player.prepare(videoSource);
             player.seekTo(currentPosition);
-
+            player.setPlayWhenReady(playerPlaying);
         }
+        player.addListener(new Player.DefaultEventListener() {
+            @Override
+            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+                if (playWhenReady && playbackState == Player.STATE_READY) {
+                   playerPlaying=true;
 
-        player.setPlayWhenReady(true);
+                } else if (playWhenReady) {
+                  playerPlaying=false;
+                } else {
+                playerPlaying=false;
+                }
+            }
+        });
+
+
     }
 
     @Override
@@ -170,6 +184,7 @@ public class Details_list extends Fragment {
             position = savedInstanceState.getInt("Position1");
             mTwoPane = savedInstanceState.getBoolean(Constants.sTwoPane);
            currentPosition = savedInstanceState.getLong(Constants.ExoPlayerPosition);
+           playerPlaying=savedInstanceState.getBoolean("PlayerPlaying");
 
         }
         if (mTwoPane) {
@@ -181,6 +196,8 @@ public class Details_list extends Fragment {
             public void onClick(View v) {
                 if (mSteps != null) {
                     position++;
+                    currentPosition=0;
+                    playerPlaying=true;
                     if (!mTwoPane) {
                         next.setVisibility(View.VISIBLE);
                     } else {
@@ -219,7 +236,7 @@ public class Details_list extends Fragment {
         super.onSaveInstanceState(outState);
         outState.putInt("Position1", position);
         outState.putBoolean(Constants.sTwoPane, mTwoPane);
-
+        outState.putBoolean("PlayerPlaying", playerPlaying);
 
         outState.putLong(Constants.ExoPlayerPosition, currentPosition);
 
